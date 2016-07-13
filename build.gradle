@@ -1,0 +1,33 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.6.RELEASE")
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
+
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'spring-boot'
+
+    group = 'foodle'
+    
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+
+    }
+
+    dependencies {
+        compile("org.springframework.boot:spring-boot-starter-web") 
+        compile("org.springframework.boot:spring-boot-starter-actuator")
+    }
+}

@@ -1,0 +1,4 @@
+jar {
+    baseName = 'foodle-restaurant-service'
+    version =  '0.1.0'
+}
