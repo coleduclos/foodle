@@ -1,0 +1,8 @@
+jar {
+    baseName = 'foodle-eureka-registration-service'
+    version =  '0.1.0'
+}
+
+dependencies {
+    compile('org.springframework.cloud:spring-cloud-starter-eureka-server')
+}

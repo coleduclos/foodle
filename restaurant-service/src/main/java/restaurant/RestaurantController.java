@@ -1,12 +1,14 @@
+package restaurant;
+
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
-public class UserController {
+public class RestaurantController {
 
-    @RequestMapping("/user")
+    @RequestMapping("/restaurant")
     public String index() {
-        return "Inside UserController!!!";
+        return "Inside RestaurantController!!!";
     }
 
 }
