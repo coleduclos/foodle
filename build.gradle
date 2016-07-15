@@ -33,6 +33,7 @@ subprojects {
     }
 
     dependencies {
+        compile('com.datastax.cassandra:cassandra-driver-core:3.0.2')
         compile('org.springframework.boot:spring-boot-starter-web') 
         compile('org.springframework.boot:spring-boot-starter-actuator')
         compile('org.springframework.cloud:spring-cloud-starter-eureka')
