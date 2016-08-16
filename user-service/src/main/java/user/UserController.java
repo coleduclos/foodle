@@ -12,9 +12,9 @@ import com.datastax.driver.core.BoundStatement;
 @RequestMapping("/user")
 public class UserController {
 
-    @RequestMapping(value="/add", method=RequestMethod.POST)
-    @ResponseBody
-    public String addUser(@RequestBody User user) {
+	@RequestMapping(value="/add", method=RequestMethod.POST)
+	@ResponseBody
+	public String addUser(@RequestBody User user) {
 
 		CassandraClient client = new CassandraClient(); 
 		client.connect();
@@ -29,7 +29,7 @@ public class UserController {
 		client.getSession().execute(boundStatement.bind( user.getUuid(), user.getEmail()));
 		client.close();
 
-        return "Added user: " + user.getEmail() + ", " + user.getUuid();
-    }
+		return "Added user: " + user.getEmail() + ", " + user.getUuid();
+	}
 
 }
