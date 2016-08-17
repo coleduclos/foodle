@@ -1,3 +1,4 @@
 include 'registration-service'
 include 'user-service'
 include 'restaurant-service'
+include 'rating-service'

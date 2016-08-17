@@ -1,7 +1,7 @@
-	package restaurant;
+package restaurant;
 
-import com.datastax.driver.core.utils.UUIDs; 
 import java.util.UUID;
+import com.datastax.driver.core.utils.UUIDs; 
 import com.datastax.driver.mapping.annotations.Table;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.ClusteringColumn;
@@ -12,12 +12,11 @@ import com.datastax.driver.mapping.annotations.Column;
 public class Restaurant {
 
 	@PartitionKey
-	@Column ( name = "restaurant_name" )
-	private String name;
-
-	@ClusteringColumn
 	@Column ( name = "restaurant_id" )
 	private UUID uuid;
+
+	@Column ( name = "restaurant_name" )
+	private String name;
 
 	public Restaurant ()
 	{

@@ -1,7 +1,16 @@
 # foodle
 
-## To Build
-javac -classpath ../resources/cassandra-java-driver-3.0.0/cassandra-driver-core-3.0.0.jar:. FoodApp.java
+## To Build All
+./gradlew build
 
-## To Run
-java -classpath ../resources/cassandra-java-driver-3.0.0/*:../resources/cassandra-java-driver-3.0.0/lib/*:. FoodApp
+## Eureka Registration Service
+java -jar registration-service/build/libs/foodle-eureka-registration-service-0.1.0.jar
+
+## Restaurant Service
+java -jar restaurant-service/build/libs/foodle-restaurant-service-0.1.0.jar
+
+## User Service
+java -jar user-service/build/libs/foodle-user-service-0.1.0.jar
+
+## Rating Service
+java -jar rating-service/build/libs/foodle-rating-service-0.1.0.jar

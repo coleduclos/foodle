@@ -1,0 +1,4 @@
+jar {
+    baseName = 'foodle-rating-service'
+    version =  '0.1.0'
+}
