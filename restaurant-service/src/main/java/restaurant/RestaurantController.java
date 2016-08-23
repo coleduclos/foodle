@@ -26,7 +26,7 @@ public class RestaurantController {
 
 		client.close();
 
-		return "SUCCESS! Added Restaurant: " + restaurant.getName() + " Restaurant ID: " + restaurant.getUuid();
+		return "SUCCESS! Added Restaurant: " + restaurant.toString();
 	}
 
 	@RequestMapping(value="/{restaurant_name}", method = RequestMethod.GET)
@@ -44,7 +44,7 @@ public class RestaurantController {
 
 		Restaurant temp = result.one();
 		if (temp != null )
-			System.out.println("FOUND! Restaurant name: " + temp.getName() + " Restaurant ID: " + temp.getUuid().toString());
+			System.out.println("FOUND! Restaurant name: " + temp.toString());
 
 		return result;
 	}

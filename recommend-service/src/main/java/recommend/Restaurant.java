@@ -1,4 +1,4 @@
-package restaurant;
+package recommend;
 
 import java.util.UUID;
 import com.datastax.driver.core.utils.UUIDs; 

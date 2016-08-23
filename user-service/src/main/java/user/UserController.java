@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.datastax.driver.core.PreparedStatement;
-import com.datastax.driver.core.BoundStatement;  
+import com.datastax.driver.mapping.Mapper;
+import com.datastax.driver.mapping.Result;
 
 @RestController
 @RequestMapping("/user")
@@ -19,17 +19,12 @@ public class UserController {
 		CassandraClient client = new CassandraClient(); 
 		client.connect();
 
-		PreparedStatement statement = client.getSession().prepare(
-			"INSERT INTO user " +
-			"(user_id, user_email) " +
-			"VALUES (?, ?);"
-		);
+		Mapper mapper = client.getMappingManager().mapper(User.class);
+		mapper.save(user);
 
-		BoundStatement boundStatement = new BoundStatement(statement);
-		client.getSession().execute(boundStatement.bind( user.getUuid(), user.getEmail()));
 		client.close();
 
-		return "Added user: " + user.getEmail() + ", " + user.getUuid();
+		return "SUCCESS! Added Restaurant: " + user.toString();
 	}
 
 }

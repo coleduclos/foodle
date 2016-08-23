@@ -1,39 +1,39 @@
-package restaurant;
+package recommend;
 
-import java.util.UUID;
 import com.datastax.driver.core.utils.UUIDs; 
+import java.util.UUID;
 import com.datastax.driver.mapping.annotations.Table;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Column;
 
-
-@Table ( name = "restaurant")
-public class Restaurant {
+@Table ( name = "user")
+public class User {
 
 	@PartitionKey
-	@Column ( name = "restaurant_id" )
+	@Column ( name = "user_id" )
 	private UUID uuid;
 
-	@Column ( name = "restaurant_name" )
-	private String name;
+	@Column ( name = "user_email")
+	private String email;
 
-	public Restaurant ()
+	public User ()
 	{
-		this.name = "";
+		this.email = "";
 		this.uuid = UUIDs.timeBased();
 	}
 
-	public Restaurant (String name)
+	public User (String email)
 	{
-		this.name = name;
+		this.email = email;
 		this.uuid = UUIDs.timeBased();
 	}
 
 	public String toString ()
 	{
-		return "Restaurant ID: " + this.uuid + 
-			" Restaurant Name: " + this.name;
+		return "User ID: " + this.uuid + 
+			" User Email: " + this.email;
 	}
+
 	public UUID getUuid ()
 	{
 		return this.uuid;
@@ -43,13 +43,13 @@ public class Restaurant {
 		this.uuid = uuid;
 	}
 
-	public String getName ()
+	public String getEmail ()
 	{
-		return this.name;
+		return this.email;
 	}
-	public void setName( String name )
+	public void setEmail( String email )
 	{
-		this.name = name;
+		this.email = email;
 	}
 
 }

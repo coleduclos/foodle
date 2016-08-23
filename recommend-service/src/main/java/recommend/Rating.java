@@ -1,9 +1,10 @@
-package rating;
+package recommend;
 
 import com.datastax.driver.core.utils.UUIDs; 
 import java.util.UUID;
 import com.datastax.driver.mapping.annotations.Table;
 import com.datastax.driver.mapping.annotations.PartitionKey;
+import com.datastax.driver.mapping.annotations.ClusteringColumn;
 import com.datastax.driver.mapping.annotations.Column;
 
 
