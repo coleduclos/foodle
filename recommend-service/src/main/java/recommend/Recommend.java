@@ -34,11 +34,8 @@ public class Recommend {
 		this.recommend_value = -1;
 	}
 
-	HashMap<UUID, Double> calculateSimilarityIndicesByRatingValue(int rating_value)
+	HashMap<UUID, Double> calculateSimilarityIndicesByRatingValue(CassandraClient client, int rating_value)
 	{
-
-		CassandraClient client = new CassandraClient(); 
-		client.connect();
 
 		RatingAccessor ratingAccessor = client.getMappingManager().createAccessor(RatingAccessor.class);
 		System.out.println("Finding users who have rated restaurant:" + this.restaurant_id + 
@@ -67,8 +64,6 @@ public class Recommend {
 				int similarity_idx_numerator = 0;
 				int similarity_idx_demoninator = user_ratings_size;
 
-				System.out.println("==============================================");
-				System.out.println("Iterating through likes. Comparing users " + this.user_id + " to " + rating.getUser_id());
 				Result<Rating> compare_ratings = ratingAccessor.getAllByUserId( rating.getUser_id() );
 				while(!compare_ratings.isExhausted())
 				{
@@ -78,18 +73,13 @@ public class Recommend {
 					// Check if both have rated the same restaurants previously
 					if (user_rating != null)
 					{
-						System.out.println("++++++++++ Both rated: " + compare_rating.getRestaurant_id());
-						System.out.println("++++++++++ User rating: " + user_rating);
-						System.out.println("++++++++++ Compared rating: " + compare_rating.getRating_value());
 						// Check if user has similar tastes
 						if(user_rating == compare_rating.getRating_value())
 						{
-							System.out.println("SIMILAR for restaurant");
 							similarity_idx_numerator ++;						
 						}
 						else
 						{
-							System.out.println("NOT SIMILAR for restaurant");
 							similarity_idx_numerator --;
 						}
 					}
@@ -109,7 +99,6 @@ public class Recommend {
 		{
 			System.out.println("User: " + id + " Similarity Index: " + user_similarity_indices.get(id));
 		}
-		client.close();
 
 		return user_similarity_indices;
 	}

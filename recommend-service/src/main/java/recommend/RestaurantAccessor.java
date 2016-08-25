@@ -11,4 +11,6 @@ public interface RestaurantAccessor {
 	@Query("SELECT * FROM restaurant WHERE restaurant_name=:restaurant_name")
     Result<Restaurant> getByName(@Param("restaurant_name") String restaurant_name);
 
+    @Query("SELECT * FROM restaurant")
+    Result<Restaurant> getAll();
 }
