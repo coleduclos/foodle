@@ -49,33 +49,48 @@ public class RestaurantSuggestions {
 
 		RatingAccessor ratingAccessor = client.getMappingManager().createAccessor(RatingAccessor.class);
 
+		List<Rating> user_ratings_list = ratingAccessor.getAllByUserId(this.user_id).all();
+		Map<UUID, Integer> user_ratings_map = new HashMap<UUID, Integer>();
+
+		for (Rating r : user_ratings_list)
+		{
+			user_ratings_map.put(r.getRestaurant_id(), r.getRating_value());
+		}
+
 		while(!all_restaurants.isExhausted())
 		{
 			Restaurant restaurant = all_restaurants.one();
 
-			List<Rating> like_ratings = 
-				ratingAccessor.getAllByRestaurantIdAndRatingValue(restaurant.getUuid(), like_value).all();
-			List<Rating> dislike_ratings = 
-				ratingAccessor.getAllByRestaurantIdAndRatingValue(restaurant.getUuid(), dislike_value).all();
+			Integer user_rating = user_ratings_map.get(restaurant.getUuid());
 
-			double probability_numerator = 0;
-			double probability_demoninator = like_ratings.size() + dislike_ratings.size();
+			// Check if user has rated this restaurant.
+			// If not, calculate the recommmendation.
+			if( user_rating == null )
+			{
+				List<Rating> like_ratings = 
+					ratingAccessor.getAllByRestaurantIdAndRatingValue(restaurant.getUuid(), like_value).all();
+				List<Rating> dislike_ratings = 
+					ratingAccessor.getAllByRestaurantIdAndRatingValue(restaurant.getUuid(), dislike_value).all();
 
-			for ( Rating r : like_ratings )
-			{
-				Double similarity_idx = similarUsers.getSimilar_users().get(r.getUser_id());
-				if ( similarity_idx != null ) 
-					probability_numerator += similarity_idx;
+				double probability_numerator = 0;
+				double probability_demoninator = like_ratings.size() + dislike_ratings.size();
+
+				for ( Rating r : like_ratings )
+				{
+					Double similarity_idx = similarUsers.getSimilar_users().get(r.getUser_id());
+					if ( similarity_idx != null ) 
+						probability_numerator += similarity_idx;
+				}
+				for ( Rating r : dislike_ratings )
+				{
+					Double similarity_idx = similarUsers.getSimilar_users().get(r.getUser_id());
+					if ( similarity_idx != null ) 
+						probability_numerator -= similarity_idx;
+				}
+				if(probability_demoninator != 0)
+					this.restaurant_suggestions.put( restaurant.getUuid(), 
+							(probability_numerator / probability_demoninator) );
 			}
-			for ( Rating r : dislike_ratings )
-			{
-				Double similarity_idx = similarUsers.getSimilar_users().get(r.getUser_id());
-				if ( similarity_idx != null ) 
-					probability_numerator -= similarity_idx;
-			}
-			if(probability_demoninator != 0)
-				this.restaurant_suggestions.put( restaurant.getUuid(), 
-						(probability_numerator / probability_demoninator) );
 		}
 
 		Mapper restaurant_suggestions_mapper = client.getMappingManager().mapper(RestaurantSuggestions.class);
